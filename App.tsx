@@ -1,22 +1,23 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
-import 'react-native-gesture-handler';
-import { ThemeProvider } from 'styled-components';
+import React from "react";
+import { StatusBar } from "react-native";
+import "react-native-gesture-handler";
+import { ThemeProvider } from "styled-components";
 import {
   useFonts,
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_700Bold,
-} from '@expo-google-fonts/poppins';
-import AppLoading from 'expo-app-loading';
+} from "@expo-google-fonts/poppins";
+import AppLoading from "expo-app-loading";
 
-import { AuthProvider, useAuth } from './src/hooks/auth';
-import theme from './src/global/styles/theme';
+import { AuthProvider, useAuth } from "./src/hooks/auth";
+import theme from "./src/global/styles/theme";
 
-import { Routes } from './src/routes';
+import { Routes } from "./src/routes";
 
-import 'intl';
-import 'intl/locale-data/jsonp/pt-BR';
+import "intl";
+import "intl/locale-data/jsonp/pt-BR";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -38,7 +39,9 @@ export default function App() {
         backgroundColor={theme.colors.primary}
       />
       <AuthProvider>
-        <Routes />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Routes />
+        </GestureHandlerRootView>
       </AuthProvider>
     </ThemeProvider>
   );

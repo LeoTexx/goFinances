@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Keyboard, Modal, TouchableWithoutFeedback, Alert } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, Alert } from "react-native";
+import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useForm } from "react-hook-form";
@@ -165,7 +166,14 @@ export function Register() {
 
           <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
 
-          <Modal visible={categoryModalOpen}>
+          <Modal
+            isVisible={categoryModalOpen}
+            swipeDirection="down"
+            onSwipeComplete={handleCloseSelectCategoryModal}
+            onBackButtonPress={handleCloseSelectCategoryModal}
+            onBackdropPress={handleCloseSelectCategoryModal}
+            style={{ margin: 0 }}
+          >
             <CategorySelect
               category={category}
               setCategory={setCategory}
