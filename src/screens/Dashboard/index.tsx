@@ -10,8 +10,9 @@ import {
   TransactionCardProps,
 } from "../../components/TransactionCard";
 
-import { monthNames } from "../../utils/months";
 import { useAuth } from "../../hooks/auth";
+
+import { standardizeCoin, standardizeDate } from "../../utils";
 
 import {
   Container,
@@ -87,10 +88,7 @@ export function Dashboard() {
           expenseTotal += Number(item.amount);
         }
 
-        const amount = Number(item.amount).toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        });
+        const amount = standardizeCoin(Number(item.amount));
 
         const date = Intl.DateTimeFormat("pt-BR", {
           day: "2-digit",
@@ -125,57 +123,26 @@ export function Dashboard() {
 
     const total = entriesTotal - expenseTotal;
 
-    const lastTransactionEntriesDateString =
-      lastTransactionEntries?.date.toString();
-
-    const lastTransactionExpensesDateString =
-      lastTransactionExpenses?.date.toString();
-
     setHighlightData({
       entries: {
-        amount: entriesTotal.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
+        amount: standardizeCoin(entriesTotal),
         lastTransaction: lastTransactionEntries
-          ? `Última entrada dia ${lastTransactionEntriesDateString!.slice(
-              0,
-              2
-            )} de ${
-              monthNames[
-                Number(lastTransactionEntriesDateString!.slice(3, 5)) - 1
-              ]
-            }`
+          ? `Última entrada dia ${standardizeDate(
+              lastTransactionEntries?.date
+            )}`
           : "Nenhuma transação",
       },
       expense: {
-        amount: expenseTotal.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
+        amount: standardizeCoin(expenseTotal),
         lastTransaction: lastTransactionExpenses
-          ? `Última saída dia ${lastTransactionExpensesDateString!.slice(
-              0,
-              2
-            )} de ${
-              monthNames[
-                Number(lastTransactionExpensesDateString!.slice(3, 5)) - 1
-              ]
-            }`
+          ? `Última saída dia ${standardizeDate(lastTransactionExpenses?.date)}`
           : "Nenhuma transação",
       },
       total: {
-        amount: total.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
+        amount: standardizeCoin(total),
         lastTransaction:
           lastTransactionEntries || lastTransactionExpenses
-            ? `01 a ${lastTransactionTotal.date.toString().slice(0, 2)} de ${
-                monthNames[
-                  Number(lastTransactionTotal.date.toString().slice(3, 5)) - 1
-                ]
-              }`
+            ? `01 a ${standardizeDate(lastTransactionTotal?.date)}`
             : "Nenhuma transação",
       },
     });
@@ -193,71 +160,71 @@ export function Dashboard() {
     }, [])
   );
 
+  if (isLoading) {
+    return (
+      <LoadContainer>
+        <ActivityIndicator color={theme.colors.primary} size="large" />
+      </LoadContainer>
+    );
+  }
+
   return (
     <Container>
-      {isLoading ? (
-        <LoadContainer>
-          <ActivityIndicator color={theme.colors.primary} size="large" />
-        </LoadContainer>
-      ) : (
-        <>
-          <Header>
-            <UserWrapper>
-              <UserInfo>
-                <Photo
-                  source={{
-                    uri: user.photo,
-                  }}
-                />
-
-                <User>
-                  <UserGreeting>Olá,</UserGreeting>
-                  <UserName>{user.name}</UserName>
-                </User>
-              </UserInfo>
-
-              <LogoutButton onPress={signOut}>
-                <Icon name="power" />
-              </LogoutButton>
-            </UserWrapper>
-          </Header>
-
-          <HighlightCards>
-            <HighlightCard
-              type="positive"
-              title="Entradas"
-              amount={highlightData.entries.amount}
-              lastTransaction={highlightData.entries.lastTransaction}
+      <Header>
+        <UserWrapper>
+          <UserInfo>
+            <Photo
+              source={{
+                uri: user.photo,
+              }}
             />
 
-            <HighlightCard
-              type="negative"
-              title="Saídas"
-              amount={highlightData.expense.amount}
-              lastTransaction={highlightData.expense.lastTransaction}
-            />
+            <User>
+              <UserGreeting>Olá,</UserGreeting>
+              <UserName>{user.name}</UserName>
+            </User>
+          </UserInfo>
 
-            <HighlightCard
-              type="total"
-              title="Total"
-              amount={highlightData.total.amount}
-              lastTransaction={highlightData.total.lastTransaction}
-            />
-          </HighlightCards>
+          <LogoutButton onPress={signOut}>
+            <Icon name="power" />
+          </LogoutButton>
+        </UserWrapper>
+      </Header>
 
-          <Transactions>
-            <Title>Listagem</Title>
+      <HighlightCards>
+        <HighlightCard
+          type="positive"
+          title="Entradas"
+          amount={highlightData.entries.amount}
+          lastTransaction={highlightData.entries.lastTransaction}
+        />
 
-            <TransactionList<React.ElementType>
-              data={transactions}
-              keyExtractor={(item: DataListProps) => item.id}
-              renderItem={({ item }: { item: DataListProps }) => (
-                <TransactionCard data={item} />
-              )}
-            />
-          </Transactions>
-        </>
-      )}
+        <HighlightCard
+          type="negative"
+          title="Saídas"
+          amount={highlightData.expense.amount}
+          lastTransaction={highlightData.expense.lastTransaction}
+        />
+
+        <HighlightCard
+          type="total"
+          title="Total"
+          amount={highlightData.total.amount}
+          lastTransaction={highlightData.total.lastTransaction}
+        />
+      </HighlightCards>
+
+      <Transactions>
+        <Title>Listagem</Title>
+
+        <TransactionList<React.ElementType>
+          data={transactions}
+          keyExtractor={(item: DataListProps) => item.id}
+          renderItem={({ item }: { item: DataListProps }) => (
+            <TransactionCard data={item} />
+          )}
+        />
+      </Transactions>
     </Container>
   );
 }
