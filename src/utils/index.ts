@@ -1,5 +1,5 @@
 export function standardizeDate(date: Date) {
-  return date.toLocaleDateString("pt-BR", {
+  return new Date(date).toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "long",
     year: "numeric",
