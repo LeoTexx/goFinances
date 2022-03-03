@@ -52,18 +52,24 @@ export const User = styled.View`
 `;
 
 export const UserGreeting = styled.Text`
-  color: ${({ theme }) => theme.colors.text_light};
+  color: ${({ theme }) => theme.colors.white};
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
 
 export const UserName = styled.Text`
-  color: ${({ theme }) => theme.colors.text_light};
+  color: ${({ theme }) => theme.colors.white};
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
 export const LogoutButton = styled(BorderlessButton)``;
+
+export const ThemeSwitch = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.colors.secondary};

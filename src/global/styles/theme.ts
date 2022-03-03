@@ -1,4 +1,4 @@
-export default {
+export const dark = {
   colors: {
     primary: "#5636D3",
     secondary: "#EE58BB",
@@ -13,6 +13,7 @@ export default {
     text_light: "#FFFFFF",
     text_dark: "#000000",
     background: "#39393A",
+    white: "#FFF",
   },
   fonts: {
     regular: "Poppins_400Regular",
@@ -20,24 +21,26 @@ export default {
     bold: "Poppins_700Bold",
   },
 };
-// export default {
-//   colors: {
-//     primary: '#5636D3',
-//     secondary: '#EE58BB',
-//     secondary_light: "rgba(255, 34, 150, 0.3)",
-//     success: '#12A454',
-//     success_light: 'rgba(18, 164, 84, 0.5)',
-//     attention: '#E83F5B',
-//     attention_light: 'rgba(232, 63, 91, 0.5)',
-//     shape: '#FFFFFF',
-//     title: '#363F5F',
-//     text: '#969CB2',
-//     text_dark: '#000000',
-//     background: '#F0F2F5',
-//   },
-//   fonts: {
-//     regular: 'Poppins_400Regular',
-//     medium: 'Poppins_500Medium',
-//     bold: 'Poppins_700Bold',
-//   },
-// };
+export const light = {
+  colors: {
+    primary: "#5636D3",
+    secondary: "#EE58BB",
+    secondary_light: "rgba(255, 34, 150, 0.3)",
+    success: "#12A454",
+    success_light: "rgba(18, 164, 84, 0.5)",
+    attention: "#E83F5B",
+    attention_light: "rgba(232, 63, 91, 0.5)",
+    shape: "#FFFFFF",
+    title: "#363F5F",
+    text: "#969CB2",
+    text_light: "#000",
+    text_dark: "#fff",
+    background: "#F0F2F5",
+    white: "#FFF",
+  },
+  fonts: {
+    regular: "Poppins_400Regular",
+    medium: "Poppins_500Medium",
+    bold: "Poppins_700Bold",
+  },
+};

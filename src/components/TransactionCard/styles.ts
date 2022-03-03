@@ -1,9 +1,10 @@
-import styled from 'styled-components/native';
-import { Feather } from '@expo/vector-icons';
-import { RFValue } from 'react-native-responsive-fontsize';
+import styled from "styled-components/native";
+import { Feather } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
+import { RectButton } from "react-native-gesture-handler";
 
 interface TransactionProps {
-  type: 'positive' | 'negative';
+  type: "positive" | "negative";
 }
 
 export const Container = styled.View`
@@ -15,17 +16,23 @@ export const Container = styled.View`
   margin-bottom: 16px;
 `;
 
+export const Header = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.text_light};
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(14)}px;
 `;
+export const DeleteButton = styled(RectButton)``;
 
 export const Amount = styled.Text<TransactionProps>`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(20)}px;
   color: ${({ theme, type }) =>
-    type === 'positive' ? theme.colors.success : theme.colors.attention};
+    type === "positive" ? theme.colors.success : theme.colors.attention};
 
   margin-top: 2px;
 `;

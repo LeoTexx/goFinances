@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { ActivityIndicator } from "react-native";
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import { ActivityIndicator, Switch } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "styled-components";
@@ -23,6 +23,7 @@ import {
   User,
   UserGreeting,
   UserName,
+  ThemeSwitch,
   Icon,
   HighlightCards,
   Transactions,
@@ -31,6 +32,7 @@ import {
   LogoutButton,
   LoadContainer,
 } from "./styles";
+import { AppThemeContext } from "../../../App";
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
@@ -48,11 +50,20 @@ interface HighlightData {
 }
 
 export function Dashboard() {
+  const { color, switchTheme } = useContext(AppThemeContext);
+  const toggleSwitch = () => {
+    switchTheme();
+    setIsEnabled((previousState) => !previousState);
+  };
+
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>(
     {} as HighlightData
   );
+  const [isEnabled, setIsEnabled] = useState(() => {
+    return color === "light" ? true : false;
+  });
 
   const theme = useTheme();
   const { signOut, user } = useAuth();
@@ -181,6 +192,17 @@ export function Dashboard() {
             </User>
           </UserInfo>
 
+          <ThemeSwitch>
+            <Icon name="moon" />
+            <Switch
+              trackColor={{ false: "#767577", true: "#f4f3f4" }}
+              thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+            <Icon name="sun" />
+          </ThemeSwitch>
           <LogoutButton onPress={signOut}>
             <Icon name="power" />
           </LogoutButton>
@@ -217,7 +239,10 @@ export function Dashboard() {
           data={transactions}
           keyExtractor={(item: DataListProps) => item.id}
           renderItem={({ item }: { item: DataListProps }) => (
-            <TransactionCard data={item} />
+            <TransactionCard
+              updateTransactions={loadTransactions}
+              data={item}
+            />
           )}
         />
       </Transactions>

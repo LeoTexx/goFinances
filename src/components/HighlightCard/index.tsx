@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Container,
   Header,
@@ -7,19 +7,19 @@ import {
   Footer,
   Amount,
   LastTransaction,
-} from './styles';
+} from "./styles";
 
 interface Props {
-  type: 'positive' | 'negative' | 'total';
+  type: "positive" | "negative" | "total";
   title: string;
   amount: string;
   lastTransaction: string;
 }
 
 const icon = {
-  positive: 'arrow-up-circle',
-  negative: 'arrow-down-circle',
-  total: 'dollar-sign',
+  positive: "arrow-up-circle",
+  negative: "arrow-down-circle",
+  total: "dollar-sign",
 };
 
 export function HighlightCard({ type, title, amount, lastTransaction }: Props) {
