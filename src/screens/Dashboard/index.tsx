@@ -32,7 +32,7 @@ import {
   LogoutButton,
   LoadContainer,
 } from "./styles";
-import { AppThemeContext } from "../../../App";
+import { AppThemeContext } from "../../context/themeContext";
 
 export interface DataListProps extends TransactionCardProps {
   id: string;

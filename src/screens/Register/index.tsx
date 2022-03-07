@@ -128,7 +128,6 @@ export function Register() {
               name="name"
               control={control}
               placeholder="Nome"
-              placeholderTextColor={theme.colors.text}
               autoCapitalize="sentences"
               autoCorrect={false}
               error={errors.name && errors.name.message}
@@ -138,7 +137,6 @@ export function Register() {
               name="amount"
               control={control}
               placeholder="Preço"
-              placeholderTextColor={theme.colors.text}
               keyboardType="phone-pad"
               error={errors.amount && errors.amount.message}
             />
@@ -159,6 +157,7 @@ export function Register() {
             </TrasactionTypes>
 
             <CategorySelectButton
+              testID="category-select-button"
               title={category.name}
               onPress={handleOpenSelectCategoryModal}
             />
@@ -167,6 +166,7 @@ export function Register() {
           <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
 
           <Modal
+            testID="category-modal"
             isVisible={categoryModalOpen}
             swipeDirection="down"
             onSwipeComplete={handleCloseSelectCategoryModal}
